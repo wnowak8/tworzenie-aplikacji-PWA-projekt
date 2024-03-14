@@ -1,7 +1,7 @@
 <template>
    <slot />
-   <!-- <Content />
-   <Sale/> -->
+   <Content />
+   <Sale/>
    <Footer />
 </template>
 
