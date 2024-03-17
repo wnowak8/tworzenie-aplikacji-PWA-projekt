@@ -1,16 +1,18 @@
 <template>
-  <div class="image-box">
-    <slot name="image"></slot>
-    <div class="sale-content">
-      <p class="sale-text"><slot name="text"></slot></p>
-      <div data-content-type="html" data-appearance="default" data-element="main" data-decoded="true">
-        <slot name="description"></slot>
-      </div>
-      <div class="sale-link-btn">
-        <a :href="link" title="Zobacz" class="sale-link">
-          <span class="button-text">Zobacz</span>
-          <ArrowSvg class="arrow-icon"/>
-        </a>
+  <div class="image-box-container">
+    <div class="image-box">
+      <slot name="image"></slot>
+      <div class="sale-content">
+        <p class="sale-text"><slot name="text"></slot></p>
+        <div data-content-type="html" data-appearance="default" data-element="main" data-decoded="true">
+          <slot name="description"></slot>
+        </div>
+        <div class="sale-link-btn">
+          <a :href="link" title="Zobacz" class="sale-link">
+            <span class="button-text">Zobacz</span>
+            <ArrowSvg class="arrow-icon"/>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -32,13 +34,53 @@ export default {
   },
 };
 </script>
-
 <style scoped>
+@media (min-width: 992px) {
+  .image-box-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+.image-box-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.image-box {
+  position: relative; /* Ustawienie relatywnej pozycji dla kontenera zdjęcia */
+  flex: 1 0 calc(50% - 15px);
+  max-width: calc(50% - 15px);
+  margin-bottom: 35px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .image-box {
+    flex: 1 0 calc(50% - 15px);
+    max-width: calc(50% - 15px);
+  }
+}
+
+.sale-content {
+  position: absolute;
+  /* bottom: 44px;
+  left: 31px;
+  width: 100%; */
+  box-sizing: border-box;
+  text-align: left;
+}
+
+@media (min-width: 992px){
+.sale-content{ 
+    bottom: 44px;
+    left: 31px;
+}
+}
+
 .sale-link-btn {
   background-color: black;
-  border: 2px solid white;
+  border: 2px solid black;
   display: inline-flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   padding: 10px 20px;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -52,8 +94,8 @@ export default {
   font-weight: 700;
   letter-spacing: 1.83px;
   font-size: 10px;
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
 }
 
 .sale-link-btn:hover {
@@ -66,7 +108,7 @@ export default {
 }
 
 .button-text {
-  margin-right: 75px; 
+  margin-right: 75px;
 }
 
 .arrow-icon {
@@ -75,12 +117,10 @@ export default {
   fill: white;
   transition: fill 0.3s, transform 0.3s;
   filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0));
-
 }
 
 .sale-link-btn:hover .arrow-icon {
   fill: black;
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0));
-
 }
 </style>
