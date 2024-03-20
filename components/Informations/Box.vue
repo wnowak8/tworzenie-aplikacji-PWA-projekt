@@ -16,7 +16,7 @@ export default {
 .box {
   flex: 1;
   text-align: center;
-  padding: 20px;
+  padding: 40px;
   margin: 0 10px;
   background-color: rgb(249, 247, 244);
   border-radius: 8px;

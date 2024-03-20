@@ -80,8 +80,8 @@ export default {
 .header {
   color: #000;
   letter-spacing: 1.86px;
-  font-weight: 600;
-  font-size: 1.3rem;
+  font-weight: 550;
+  font-size: 13px;
   line-height: 1.2;
   margin-bottom: 20px;
   text-transform: uppercase;
@@ -89,7 +89,7 @@ export default {
 }
 
 .text {
-  font-size: 1.3rem;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.6;
   margin: 0;

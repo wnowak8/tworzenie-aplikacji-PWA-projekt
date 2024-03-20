@@ -1,36 +1,42 @@
 <template>
   <section class="companies">
     <div class="companies-wrapper">
-      <div
-        class="companies-slider slick-initialized slick-slider"
-        id="js-companies-slider"
+      <vueper-slides
+        class="no-shadow"
+        :visible-slides="computedVisibleSlides"
+        slide-multiple="computedSlideMultiple"
+        :gap="5"
+        :slide-ratio="computedSlideRatio"
+        :dragging-distance="200"
+        :breakpoints="{ 800: { visibleSlides: 3 } }"
+
       >
-        <div class="slick-list draggable">
-          <div class="slick-track">
-            <div
-              v-for="(company, index) in companies"
-              :key="index"
-              class="slick-slide slick-active"
-            >
-              <div class="companies-slide">
-                <a :href="company.link" tabindex="0">
-                  <img :src="company.imgSrc" :alt="company.altText" />
-                </a>
-              </div>
+        <vueper-slide
+          v-for="(company, index) in companies"
+          :key="index"
+          :alt="company.altText"
+          :image="company.imgSrc"
+        >
+          <a :href="company.link">
+            <div class="company-container">
+            <img :src="company.imgSrc" :alt="company.altText" />
             </div>
-          </div>
-        </div>
-      </div>
+          </a>
+          <template v-slot:image> </template>
+        </vueper-slide>
+      </vueper-slides>
     </div>
   </section>
 </template>
 
 <script>
-import Companies from "./Companie.vue";
+import { VueperSlides, VueperSlide } from "vueperslides";
+import "vueperslides/dist/vueperslides.css";
 
 export default {
   components: {
-    Companies,
+    VueperSlides,
+    VueperSlide,
   },
   data() {
     return {
@@ -59,20 +65,37 @@ export default {
           link: "",
           altText: "oryginalnosc",
         },
+        // Add more company objects as needed
       ],
     };
   },
+  computed: {
+    computedVisibleSlides() {
+      return Math.min(this.companies.length, 4);
+    },
+    computedSlideRatio() {
+      return this.companies.length === 3 ? 1 / 4 : 1 / 8;
+    },
+    computedSlideMultiple() {
+      return this.companies.length > 3 ? 1 : this.companies.length;
+    },
+  },
+  mounted() {
+    // Ukryj kropki paginacji
+    const paginationDots = document.querySelectorAll('.vueper-pagination');
+    paginationDots.forEach(dot => dot.style.display = 'none');
+  }
 };
 </script>
-
 <style>
-* {
-  box-sizing: border-box;
-}
 @media (min-width: 768px) {
   .companies {
     padding: 41px 0 73px;
   }
+}
+
+.companies {
+  padding: 41px 0 75px;
 }
 .companies-wrapper {
   margin-left: auto;
@@ -81,78 +104,33 @@ export default {
   padding-left: 40px;
   padding-right: 40px;
 }
-div {
-  display: block;
-}
-
-.companies-slider.slick-initialized {
-  visibility: visible;
-  opacity: 1;
-}
-@media (min-width: 1200px) {
-  .companies-slider {
-    padding: 0 35px;
-  }
-}
-.slick-slider {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-}
-.companies-slider {
-  display: flex;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 1s ease;
-}
-.slick-list {
-  position: relative;
-  overflow: hidden;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-.slick-track {
-  position: relative;
-  left: 0;
-  top: 0;
-  display: flex;
-  height: auto;
-  justify-content: center;
-  align-items: center;
-}
-.slick-slide {
+.company-container {
+  width: 100%;
   height: 100%;
 }
-
-.slick-initialized .slick-slide {
-  display: inline-block;
-  text-align: center;
-  height: auto;
-}
-.slick-initialized .slick-slide.slick-active {
-  height: 100%;
-}
-.companies .slick-slide {
+.company-image {
   padding: 10px;
+  margin: auto;
+
+
+}
+.vueperslide__content-wrapper{
+  max-width: 188px;
+  width: 100%;
   height: auto;
-  overflow: hidden;
-  margin: 0;
-  box-sizing: border-box;
-  width: calc(25% - 20px);
+  transition: all .2s ease-in-out;
+  padding: 10px;
+  
 }
-@media (min-width: 768px) {
-  .companies .slick-slide {
-    width: calc(20% - 25px);
-  }
+.vueperslides__bullets {
+  display: none !important;
 }
-.companies .slick-slide img {
-  max-width: 100%;
+.vueperslides__arrow--next, .vueperslides__arrow--prev {
+
+  color: rgba(0, 0, 0, .2);
+  font-size: 8px;
+  font-weight: bold;
 }
-.companies-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+
+
 </style>
