@@ -3,13 +3,10 @@
     <div class="companies-wrapper">
       <vueper-slides
         class="no-shadow"
-        :visible-slides="computedVisibleSlides"
-        slide-multiple="computedSlideMultiple"
-        :gap="5"
-        :slide-ratio="computedSlideRatio"
-        :dragging-distance="200"
-        :breakpoints="{ 800: { visibleSlides: 3 } }"
-
+        :visible-slides=visibleSlides
+        :gap="3"
+        :slide-ratio="1 / 8"
+        :breakpoints="{ 768: { visibleSlides: 1 } }"
       >
         <vueper-slide
           v-for="(company, index) in companies"
@@ -19,7 +16,7 @@
         >
           <a :href="company.link">
             <div class="company-container">
-            <img :src="company.imgSrc" :alt="company.altText" />
+              <img :src="company.imgSrc" :alt="company.altText" />
             </div>
           </a>
           <template v-slot:image> </template>
@@ -44,50 +41,58 @@ export default {
         {
           imgSrc:
             "https://clickfashion.pl/media/idea07_contenttypes/contenttypeentity/image/m/a/made_in_poland.png",
-          link: "",
+          link: "https://clickfashion.pl/",
           altText: "Made in poland",
         },
         {
           imgSrc:
             "https://clickfashion.pl/media/idea07_contenttypes/contenttypeentity/image/2/_/2.png",
-          link: "",
+          link: "https://clickfashion.pl/",
           altText: "Naturalne materiały",
         },
         {
           imgSrc:
             "https://clickfashion.pl/media/idea07_contenttypes/contenttypeentity/image/3/_/3.png",
-          link: "",
+          link: "https://clickfashion.pl/",
           altText: "Hand Made",
         },
         {
           imgSrc:
             "https://clickfashion.pl/media/idea07_contenttypes/contenttypeentity/image/4/_/4.png",
-          link: "",
+          link: "https://clickfashion.pl/",
           altText: "oryginalnosc",
         },
-        // Add more company objects as needed
       ],
+      visibleSlides: 3,
     };
   },
   computed: {
-    computedVisibleSlides() {
-      return Math.min(this.companies.length, 4);
-    },
     computedSlideRatio() {
       return this.companies.length === 3 ? 1 / 4 : 1 / 8;
     },
-    computedSlideMultiple() {
-      return this.companies.length > 3 ? 1 : this.companies.length;
-    },
   },
   mounted() {
-    // Ukryj kropki paginacji
-    const paginationDots = document.querySelectorAll('.vueper-pagination');
-    paginationDots.forEach(dot => dot.style.display = 'none');
-  }
+    const paginationDots = document.querySelectorAll(".vueper-pagination");
+    paginationDots.forEach((dot) => (dot.style.display = "none"));
+    this.updateVisibleSlides(); 
+    window.addEventListener("resize", this.updateVisibleSlides);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.updateVisibleSlides);
+  },
+  methods: {
+    updateVisibleSlides() {
+      if (document.documentElement.clientWidth <= 768) {
+        this.visibleSlides = 3;
+      } else {
+        this.visibleSlides = 4;
+      }
+    },
+  },
 };
 </script>
 <style>
+
 @media (min-width: 768px) {
   .companies {
     padding: 41px 0 73px;
@@ -106,31 +111,43 @@ export default {
 }
 .company-container {
   width: 100%;
-  height: 100%;
-}
-.company-image {
-  padding: 10px;
-  margin: auto;
-
-
-}
-.vueperslide__content-wrapper{
-  max-width: 188px;
-  width: 100%;
   height: auto;
-  transition: all .2s ease-in-out;
-  padding: 10px;
-  
+  display: flex;
+  justify-content: center;
+}
+
+.vueperslide:nth-child(1),
+.vueperslide:nth-child(3),
+.vueperslide:nth-child(4) {
+  background-size: auto;
+  background-repeat: no-repeat;
+  max-width: 188px;
+  transition: transform 0.2s ease-in-out;
+}
+.vueperslide:nth-child(1):hover,
+.vueperslide:nth-child(3):hover,
+.vueperslide:nth-child(4):hover {
+  transform: scale(1.2);
+}
+.vueperslide:nth-child(2) {
+  max-width: 188px;
+  max-height: 130px;
+  background-size: cover;
+  transition: transform 0.2s ease-in-out;
+}
+.vueperslide:nth-child(2):hover {
+  transform: scale(1.2);
 }
 .vueperslides__bullets {
   display: none !important;
 }
-.vueperslides__arrow--next, .vueperslides__arrow--prev {
-
-  color: rgba(0, 0, 0, .2);
+.vueperslides__arrow--next,
+.vueperslides__arrow--prev {
+  color: rgba(0, 0, 0, 0.2);
   font-size: 8px;
   font-weight: bold;
 }
-
-
+.vueperslides__track-inner {
+  justify-content: center;
+}
 </style>
