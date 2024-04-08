@@ -2,11 +2,31 @@
   <section class="companies">
     <div class="companies-wrapper">
       <vueper-slides
+        ref="slides"
         class="no-shadow"
-        :visible-slides=visibleSlides
-        :gap="3"
+        :visible-slides="visibleSlides"
+        slide-multiple
+        :gap="5"
         :slide-ratio="1 / 8"
-        :breakpoints="{ 768: { visibleSlides: 1 } }"
+        :infinite="true"
+        :bullets="false"
+        :touchable="false"
+        :arrows="true"
+        :dragging-distance="200"
+        :breakpoints="{
+          1000: {
+            arrows: true,
+            infinite: true,
+            visibleSlides: 3,
+            slideMultiple: 3,
+          },
+          768: {
+            arrows: true,
+            infinite: true,
+            visibleSlides: 2,
+            slideMultiple: 2,
+          },
+        }"
       >
         <vueper-slide
           v-for="(company, index) in companies"
@@ -63,36 +83,12 @@ export default {
           altText: "oryginalnosc",
         },
       ],
-      visibleSlides: 3,
+      visibleSlides: 4,
     };
-  },
-  computed: {
-    computedSlideRatio() {
-      return this.companies.length === 3 ? 1 / 4 : 1 / 8;
-    },
-  },
-  mounted() {
-    const paginationDots = document.querySelectorAll(".vueper-pagination");
-    paginationDots.forEach((dot) => (dot.style.display = "none"));
-    this.updateVisibleSlides(); 
-    window.addEventListener("resize", this.updateVisibleSlides);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.updateVisibleSlides);
-  },
-  methods: {
-    updateVisibleSlides() {
-      if (document.documentElement.clientWidth <= 768) {
-        this.visibleSlides = 3;
-      } else {
-        this.visibleSlides = 4;
-      }
-    },
   },
 };
 </script>
-<style>
-
+<style scoped lang="scss">
 @media (min-width: 768px) {
   .companies {
     padding: 41px 0 73px;
@@ -149,5 +145,10 @@ export default {
 }
 .vueperslides__track-inner {
   justify-content: center;
+}
+@media (max-width: 768px) {
+  .vueperslides__track-inner {
+    justify-content: flex-start;
+  }
 }
 </style>

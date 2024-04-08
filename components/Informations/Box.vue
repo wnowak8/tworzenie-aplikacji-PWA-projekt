@@ -12,7 +12,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .box {
   flex: 1;
   text-align: center;
@@ -20,6 +20,8 @@ export default {
   margin: 0 10px;
   background-color: rgb(249, 247, 244);
   border-radius: 8px;
+  box-shadow: none;
+
 }
 
 

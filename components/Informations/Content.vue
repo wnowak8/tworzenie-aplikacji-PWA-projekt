@@ -3,7 +3,7 @@
     <div class="three-box-component">
       <Box v-for="(box, index) in boxes" :key="index">
         <template v-slot:icon>
-          <div class="icon" v-if="box.icon !== ''">
+          <div class="icon" v-if="box.icon !== ''" style="width: 50px; height: 50px;">
             <component :is="box.icon" v-if="typeof box.icon === 'object'" class="svg-icon" />
           </div>
         </template>
@@ -52,7 +52,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .informations {
@@ -100,4 +100,7 @@ export default {
   width: 50px;
   height: 50px; 
 }
+
+
+
 </style>

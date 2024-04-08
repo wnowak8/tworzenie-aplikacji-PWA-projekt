@@ -37,7 +37,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 @media (min-width: 768px) {
   .image-box {
     flex: 1 0 calc(50% - 15px);
