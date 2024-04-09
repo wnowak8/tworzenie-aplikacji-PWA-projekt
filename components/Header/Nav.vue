@@ -77,10 +77,18 @@ const toggleNavChildrenVisible = () => {
 
 <template>
   <nav>
+    <div class="user-account">
+      <span class="material-symbols-outlined"> person </span>
+      <a href="https://clickfashion.pl/customer/account/" target="_blank"
+        >MOJE KONTO</a
+      >
+    </div>
     <ul>
       <li v-for="(item, index) of navigation" class="nav-item">
         <span class="nav-item-content">
-          <a :href="item.link" target="_blank"class="desktop">{{ item.label }} </a>
+          <a :href="item.link" target="_blank" class="desktop"
+            >{{ item.label }}
+          </a>
           <span v-if="index === 0" class="material-symbols-outlined desktop">
             expand_more
           </span>
@@ -91,7 +99,9 @@ const toggleNavChildrenVisible = () => {
             :class="index === 0 ? 'shop' : ''"
             >{{ item.label }}
           </a>
-          <a v-if="index !== 0" :href="item.link" target="_blank" class="mobile">{{ item.label }} </a>
+          <a v-if="index !== 0" :href="item.link" target="_blank" class="mobile"
+            >{{ item.label }}
+          </a>
           <span
             v-if="index === 0"
             @click="toggleNavChildrenVisible()"
@@ -105,7 +115,11 @@ const toggleNavChildrenVisible = () => {
           class="nav-item-children mobile"
         >
           <ul>
-            <li><a href="https://clickfashion.pl/sklep">Wszystkie</a></li>
+            <li>
+              <a href="https://clickfashion.pl/sklep" target="_blank"
+                >Wszystkie</a
+              >
+            </li>
             <li v-for="item of navigation[0].children">
               <a :href="item.link" target="_blank">{{ item.label }}</a>
             </li>
@@ -133,6 +147,12 @@ nav {
     max-width: 1140px;
   }
 
+  @media screen and (min-width: 992px) {
+    .user-account {
+      display: none;
+    }
+  }
+
   @media screen and (max-width: 991px) {
     position: fixed;
     top: 120px;
@@ -142,6 +162,17 @@ nav {
     z-index: 9;
     overflow-y: scroll;
     background-color: #fff;
+
+    .user-account {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 23px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 36px;
+    }
   }
 }
 ul {
@@ -234,7 +265,7 @@ a {
   display: none;
   left: 0;
   right: 0;
-  top: 200px;
+  top: 220px;
   background-color: #fff;
 
   &.mobile {
