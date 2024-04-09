@@ -6,39 +6,39 @@ const navigation = [
     children: [
       {
         label: "Kolekcja",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/kolekcja",
       },
       {
         label: "Sukienki | Kombinezony",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/sukienki-kombinezony",
       },
       {
         label: "Bluzki | Koszule",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/bluzki-koszule",
       },
       {
         label: "Marynarki",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/marynarki",
       },
       {
         label: "Płaszcze | Kurtki",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/plaszcze-i-kurtki.html",
       },
       {
         label: "Spodnie",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/spodnie",
       },
       {
         label: "Spódnice",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/spodnice-223.html",
       },
       {
         label: "Swetry",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/swetry",
       },
       {
         label: "Golfy",
-        link: "#",
+        link: "https://clickfashion.pl/sklep/golfy.html",
       },
     ],
   },
@@ -67,6 +67,12 @@ const navigation = [
     link: "https://clickfashion.pl/nowosci.html",
   },
 ];
+
+const isNavChildrenVisible = ref(false);
+
+const toggleNavChildrenVisible = () => {
+  isNavChildrenVisible.value = !isNavChildrenVisible.value;
+};
 </script>
 
 <template>
@@ -74,16 +80,42 @@ const navigation = [
     <ul>
       <li v-for="(item, index) of navigation" class="nav-item">
         <span class="nav-item-content">
-          <a :href="item.link">{{ item.label }} </a>
-          <span v-if="index === 0" class="material-symbols-outlined">
+          <a :href="item.link" target="_blank"class="desktop">{{ item.label }} </a>
+          <span v-if="index === 0" class="material-symbols-outlined desktop">
+            expand_more
+          </span>
+          <a
+            v-if="index === 0"
+            @click="toggleNavChildrenVisible()"
+            class="mobile"
+            :class="index === 0 ? 'shop' : ''"
+            >{{ item.label }}
+          </a>
+          <a v-if="index !== 0" :href="item.link" target="_blank" class="mobile">{{ item.label }} </a>
+          <span
+            v-if="index === 0"
+            @click="toggleNavChildrenVisible()"
+            class="material-symbols-outlined mobile"
+          >
             expand_more
           </span>
         </span>
+        <div
+          v-if="index === 0 && isNavChildrenVisible"
+          class="nav-item-children mobile"
+        >
+          <ul>
+            <li><a href="https://clickfashion.pl/sklep">Wszystkie</a></li>
+            <li v-for="item of navigation[0].children">
+              <a :href="item.link" target="_blank">{{ item.label }}</a>
+            </li>
+          </ul>
+        </div>
       </li>
-      <div class="nav-item-children">
+      <div class="nav-item-children desktop">
         <ul>
           <li v-for="item of navigation[0].children">
-            <a :href="item.link">{{ item.label }} </a>
+            <a :href="item.link" target="_blank">{{ item.label }}</a>
           </li>
         </ul>
       </div>
@@ -100,10 +132,25 @@ nav {
   @media screen and (max-width: 1700px) {
     max-width: 1140px;
   }
+
+  @media screen and (max-width: 991px) {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    height: 100%;
+    padding: 20px 0px;
+    z-index: 9;
+    overflow-y: scroll;
+    background-color: #fff;
+  }
 }
 ul {
   list-style: none;
   display: flex;
+
+  @media screen and (max-width: 991px) {
+    flex-direction: column;
+  }
 }
 .nav-item {
   position: relative;
@@ -120,6 +167,37 @@ a {
   width: 100%;
   align-items: center;
   padding: 12px 20px;
+
+  @media screen and (min-width: 992px) {
+    .mobile {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    justify-content: center;
+    font-size: 30px;
+    padding: 23px 75px;
+
+    .desktop {
+      display: none;
+    }
+
+    .mobile {
+      display: inline-block;
+
+      &.shop {
+        margin-left: auto;
+        cursor: pointer;
+      }
+    }
+
+    span.mobile {
+      display: inline;
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
 
   a {
     display: inline-block;
@@ -144,9 +222,11 @@ a {
   }
 }
 
-.nav-item:first-child:hover ~ .nav-item-children,
-.nav-item-children:hover {
-  display: block;
+.nav-item:first-child:hover ~ .nav-item-children.desktop,
+.nav-item-children.desktop:hover {
+  @media screen and (min-width: 992px) {
+    display: block;
+  }
 }
 
 .nav-item-children {
@@ -156,6 +236,26 @@ a {
   right: 0;
   top: 200px;
   background-color: #fff;
+
+  &.mobile {
+    position: relative;
+    display: block;
+    top: unset;
+    left: unset;
+    right: unset;
+    background-color: #f5f5f5;
+
+    @media screen and (min-width: 992px) {
+      display: none;
+    }
+
+    ul li {
+      width: 100%;
+      padding: 14px 0;
+      font-weight: normal;
+      text-align: center;
+    }
+  }
 
   ul {
     flex-direction: column;

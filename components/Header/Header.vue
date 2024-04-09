@@ -4,6 +4,7 @@ import UserMenu from "~/components/Header/UserMenu.vue";
 import { ref } from "vue";
 
 const isHeaderInfoVisible = ref(true);
+const isNavVisible = ref(true)
 const headerInfo =
   "PRODUKTY TWORZONE RĘCZNIE, WYSYŁKA MOŻE WYDŁUŻYĆ SIĘ DO 5 DNI";
 
@@ -23,9 +24,9 @@ const toogleHeaderInfoVisible = () => {
     </div>
     <div class="user-panel">
       <img src="~/assets/logo.png" alt="logo" />
-      <UserMenu />
+      <UserMenu v-model="isNavVisible"/>
     </div>
-    <Nav />
+    <Nav v-if="isNavVisible" />
   </header>
 </template>
 
@@ -35,6 +36,11 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 991px) {
+    position: sticky;
+    z-index: 9;
+  }
 }
 
 .header-info {

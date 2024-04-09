@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from "vue";
 
+const isNavVisible = defineProps(['modelValue'])
+const toggleNavVisible = defineEmits(['update:modelValue'])
+
 const isSearchInputVisible = ref(false);
 
 const searchInputRef = ref(null);
@@ -18,9 +21,13 @@ const handleSearchIconClick = () => {
 
 const searchProduct = () => {
   const searchValue = searchInputRef.value.value;
-
-  window.location.href = `https://clickfashion.pl/catalogsearch/result/?q=${searchValue}`;
+  
+  window.open(`https://clickfashion.pl/catalogsearch/result/?q=${searchValue}`, '_blank');
 };
+
+const handleMenuIconClick = () => {
+  toggleNavVisible('update:modelValue', !isNavVisible.modelValue)
+}
 </script>
 
 <template>
@@ -36,16 +43,19 @@ const searchProduct = () => {
     <span @click="handleSearchIconClick()" class="material-symbols-outlined search-icon">
       search
     </span>
-    <a href="https://clickfashion.pl/customer/account/"
+    <a href="https://clickfashion.pl/customer/account/" target="_blank"
       ><span class="material-symbols-outlined"> person </span></a
     >
-    <a href="https://clickfashion.pl/wishlist/">
+    <a href="https://clickfashion.pl/wishlist/" target="_blank">
       <span class="material-symbols-outlined"> favorite </span>
     </a>
     <div class="separation"></div>
-    <a href="https://clickfashion.pl/checkout/cart/">
+    <a href="https://clickfashion.pl/checkout/cart/" target="_blank">
       <span class="material-symbols-outlined"> shopping_bag </span>
     </a>
+    <span @click="handleMenuIconClick()" class="material-symbols-outlined menu-icon">
+      {{ isNavVisible.modelValue ? 'close' : 'menu' }}
+    </span>
   </div>
 </template>
 
@@ -55,9 +65,26 @@ const searchProduct = () => {
   align-items: center;
   gap: 20px;
 
+  .menu-icon{
+    cursor: pointer;
+    display: none;
+  }
+
+  @media screen and (max-width: 991px) {
+    .separation, a:nth-of-type(1), a:nth-of-type(2){
+      display: none;
+    }
+
+    .menu-icon {
+      display: inline;
+    }
+  }
+
   .search-icon {
     cursor: pointer;
   }
+
+
 }
 
 .search-input {
