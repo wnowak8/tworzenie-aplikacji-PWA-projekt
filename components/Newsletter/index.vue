@@ -52,7 +52,6 @@
    background-color: #f9f7f4;
    margin-left: auto;
    margin-right: auto;
-   max-width: 1190px;
    padding-left: 40px;
    padding-right: 40px;
    position: relative;
