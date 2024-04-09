@@ -1,1 +1,6 @@
-<template>HOME</template>
+<template>
+   <InformationsContent />
+   <Sale />
+   <SaleCompaniesSlider />
+   <Newsletter />
+</template>
