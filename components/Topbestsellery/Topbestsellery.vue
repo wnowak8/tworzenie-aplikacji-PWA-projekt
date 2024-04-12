@@ -93,12 +93,12 @@ export default {
     methods: {
       getImageMarginTop(index) {
     const marginTopMap = {
-        0: '120px', // Pierwsze zdjęcie na środku
-        1: '0px',   // Drugie zdjęcie trochę wyżej
-        2: '250px', // Trzecie zdjęcie trochę niżej
+        0: '120px', 
+        1: '0px',   
+        2: '250px',
     };
 
-    return marginTopMap[index] || '0'; // Domyślnie brak marginesu dla innych indeksów
+    return marginTopMap[index] || '0';
   },
 
       handleMouseOver(index) {
@@ -112,8 +112,7 @@ export default {
             }
         });
       },
-
-    // Metoda obsługująca opuszczenie myszki z produktu
+      
         handleMouseLeave() {
         this.hoveredProductIndex = -1;
           if (this.sizesContainer) {
@@ -224,7 +223,7 @@ export default {
 }
 
 .bestseller-link-container {
-    text-align: left; /* Ustawienie na lewej stronie */
+    text-align: left; 
     margin-left: 30px;
 }
 
@@ -286,7 +285,7 @@ export default {
     max-height: 135px;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.9);
-    transition: height 0.3s ease; /* Płynna animacja wysokości */
+    transition: height 0.3s ease; 
 }
 
 .sizes-grid {
@@ -308,7 +307,7 @@ export default {
     margin: 2px;
     font-size: 14px;
     font-weight: bold;
-    transition: transform 0.3s ease; /* Płynna animacja przekształcenia */
+    transition: transform 0.3s ease; 
     cursor: pointer;
 
 }
