@@ -1,4 +1,5 @@
 <template>
+   <Topbestsellery />
    <InformationsContent />
    <Sale />
    <SaleCompaniesSlider />
