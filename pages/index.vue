@@ -1,7 +1,8 @@
 <template>
-   <Topbestsellery />
-   <InformationsContent />
-   <Sale />
-   <SaleCompaniesSlider />
-   <Newsletter />
+  <Banner />
+  <Topbestsellery />
+  <InformationsContent />
+  <Sale />
+  <SaleCompaniesSlider />
+  <Newsletter />
 </template>
