@@ -1,6 +1,6 @@
 <template>
   <section class="companies">
-    <div class="companies-wrapper" style="margin-left: 150px;">
+    <div class="companies-wrapper" style="margin-left: 200px;">
       <vueper-slides
         ref="slides"
         class="no-shadow"
